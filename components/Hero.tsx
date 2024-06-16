@@ -24,8 +24,11 @@ export function Hero() {
         <Highlight className="text-black dark:text-white">
           Sparks
         </Highlight>
-        <div>
+        {/* <div>
             <MintButton/>
+        </div> */}
+        <div className="text-lg text-white opacity-70 font-thin">
+          Are you ready to ignite your creativity?
         </div>
       </motion.h1>
     </HeroHighlight>
