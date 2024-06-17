@@ -7,10 +7,12 @@ import { Hero } from "../components/Hero";
 import NFTCard from "../components/NFTCard";
 import { useAccount } from "wagmi";
 import { BACKEND_URL } from "../constants";
-
-
+import NFTs from "../components/NFTGrid";
+import ClientOnly from "../components/ClientOnly";
+import { useRef } from "react";
 
 const Home: NextPage = () => {
+  const ref = useRef();
   const { isConnected } = useAccount();
   return (
     <div className={styles.container}>
@@ -21,57 +23,18 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <nav className={styles.nav}>
-        {isConnected && <MintButton /> }
+        {isConnected && <MintButton refetch={ref.current} />}
         <ConnectButton />
       </nav>
       <main className={styles.main}>
         <Hero />
         <div className="p-2 text-xl text-left w-full border-t-2 border-zinc-900 mb-2" />
-        {/* <MintButton/> */}
         <div className={styles.grid}>
-          <NFTCard
-            tokenID={52323}
-            owner={"0x5Cb5D140FbdFA59563e6bdc966d97296b0b61653"}
-            tokenURI={"yes"}
-          />
-          <NFTCard
-            tokenID={52323}
-            owner={"0x5Cb5D140FbdFA59563e6bdc966d97296b0b61653"}
-            tokenURI={"yes"}
-          />
-          <NFTCard
-            tokenID={52323}
-            owner={"0x5Cb5D140FbdFA59563e6bdc966d97296b0b61653"}
-            tokenURI={"yes"}
-          />
-          <NFTCard
-            tokenID={52323}
-            owner={"0x5Cb5D140FbdFA59563e6bdc966d97296b0b61653"}
-            tokenURI={"yes"}
-          />
-          <NFTCard
-            tokenID={52323}
-            owner={"0x5Cb5D140FbdFA59563e6bdc966d97296b0b61653"}
-            tokenURI={"yes"}
-          />
-          <NFTCard
-            tokenID={52323}
-            owner={"0x5Cb5D140FbdFA59563e6bdc966d97296b0b61653"}
-            tokenURI={"yes"}
-          />
-          <NFTCard
-            tokenID={52323}
-            owner={"0x5Cb5D140FbdFA59563e6bdc966d97296b0b61653"}
-            tokenURI={"yes"}
-          />
-          <NFTCard
-            tokenID={52323}
-            owner={"0x5Cb5D140FbdFA59563e6bdc966d97296b0b61653"}
-            tokenURI={"yes"}
-          />
+          <ClientOnly>
+            <NFTs ref={ref} />
+          </ClientOnly>
         </div>
       </main>
-
       <footer className={styles.footer}>
         <a
           href="https://andithemudkip.com"

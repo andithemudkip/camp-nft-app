@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.10.5",
     "@radix-ui/colors": "^3.0.0",
     "@radix-ui/react-dialog": "^1.0.5",
     "@rainbow-me/rainbowkit": "^2.1.2",
@@ -16,6 +17,8 @@
     "axios": "^1.7.2",
     "clsx": "^2.1.1",
     "framer-motion": "^11.2.10",
+    "graphql": "^16.8.2",
+    "graphql-ws": "^5.16.0",
     "mini-svg-data-uri": "^1.4.4",
     "next": "^14.2.3",
     "react": "^18.3.0",

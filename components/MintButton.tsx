@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { FileUploader } from "react-drag-drop-files";
 import { ACCEPTED_FILE_TYPES, NFT_CONTRACT_ADDRESS } from "../constants";
@@ -11,7 +11,7 @@ import {
 } from "wagmi";
 import { truncateText } from "../utils/text";
 
-const MintButton = () => {
+const MintButton = (props: any) => {
   const [file, setFile] = useState(null);
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -55,6 +55,19 @@ const MintButton = () => {
       setLoading(false);
     }
   }, [error]);
+
+  useEffect(() => {
+    if (isConfirmed) {
+      setTimeout(() => {
+        handleClear();
+        props.refetch?.refetch();
+      }, 3000);
+    }
+  }, [isConfirmed]);
+
+  // useEffect(() => {
+  //   console.log (props.refetch?.refetch);
+  // }, []);
   const handleMint = async () => {
     if (!file) {
       alert("Please select an image.");
@@ -166,10 +179,14 @@ const MintButton = () => {
               {isConfirming ? (
                 <div>Waiting for confirmation...</div>
               ) : isConfirmed ? (
-                <div>Transaction confirmed!</div>
+                <div>Transaction confirmed! Closing modal in 3 seconds...</div>
               ) : null}
             </div>
-            <button className="Button green" onClick={handleMint} disabled={loading}>
+            <button
+              className="Button green"
+              onClick={handleMint}
+              disabled={loading}
+            >
               {(loading || isPending) && !isConfirmed ? "Loading" : "Mint"}
             </button>
           </div>
