@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BACKEND_URL, PROD_BACKEND_URL } from "../constants";
+import { BACKEND_URL } from "../constants";
 const uploadMetadata = async ({ file, name, description } : any) => {
 	const data = new FormData();
 	data.append("fileData", file);
@@ -8,7 +8,7 @@ const uploadMetadata = async ({ file, name, description } : any) => {
 
     try {
         const metadata = await axios.post(
-            `${PROD_BACKEND_URL}/create/collectible/upload`,
+            `${BACKEND_URL}/create/collectible/upload`,
             data
         );
         const meta = metadata.data?.metadata;
