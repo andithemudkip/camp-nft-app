@@ -5,10 +5,12 @@ import styles from "../styles/Home.module.css";
 import MintButton from "../components/MintButton";
 import { Hero } from "../components/Hero";
 import NFTCard from "../components/NFTCard";
+import { useAccount } from "wagmi";
 
 
 
 const Home: NextPage = () => {
+  const { isConnected } = useAccount();
   return (
     <div className={styles.container}>
       <Head>
@@ -18,7 +20,7 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <nav className={styles.nav}>
-        <MintButton />
+        {isConnected && <MintButton /> }
         <ConnectButton />
       </nav>
       <main className={styles.main}>

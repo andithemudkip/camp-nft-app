@@ -1,9 +1,15 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { FileUploader } from "react-drag-drop-files";
 import { ACCEPTED_FILE_TYPES, NFT_CONTRACT_ADDRESS } from "../constants";
 import NFTContract from "../contracts/CampNFT.json";
 import { uploadMetadata } from "../utils/create";
+import {
+  useAccount,
+  useWaitForTransactionReceipt,
+  useWriteContract,
+} from "wagmi";
+import { truncateText } from "../utils/text";
 
 const MintButton = () => {
   const [file, setFile] = useState(null);
@@ -11,6 +17,19 @@ const MintButton = () => {
   const [loading, setLoading] = useState(false);
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const { data: hash, isPending, error, writeContract } = useWriteContract();
+  const { isLoading: isConfirming, isSuccess: isConfirmed } =
+    useWaitForTransactionReceipt({ hash });
+  const { address } = useAccount();
+
+  const handleClear = () => {
+    setOpen(false);
+    setFile(null);
+    setName("");
+    setDescription("");
+    setLoading(false);
+  };
+
   const handleChange = (file: any) => {
     setFile(file);
     console.log(file);
@@ -22,6 +41,20 @@ const MintButton = () => {
   const handleDescriptionInput = (e: any) => {
     setDescription(e.target.value);
   };
+
+  useEffect(() => {
+    if (hash) {
+      console.log(hash);
+      setLoading(false);
+    }
+  }, [hash]);
+
+  useEffect(() => {
+    if (error) {
+      console.error(error);
+      setLoading(false);
+    }
+  }, [error]);
   const handleMint = async () => {
     if (!file) {
       alert("Please select an image.");
@@ -44,7 +77,13 @@ const MintButton = () => {
         description,
       });
       console.log(meta);
-      setLoading(false);
+
+      writeContract({
+        abi: NFTContract,
+        address: NFT_CONTRACT_ADDRESS,
+        functionName: "safeMint",
+        args: [address, meta],
+      });
     } catch (err) {
       console.error(err);
       setLoading(false);
@@ -115,13 +154,32 @@ const MintButton = () => {
             </div>
           </div>
 
-          <div className="w-full flex justify-end items-end mt-3">
-            {/* <Dialog.Close asChild> */}
-              <button className="Button green" onClick={handleMint}>Mint</button>
-            {/* </Dialog.Close> */}
+          <div className="w-full flex justify-between items-end mt-3">
+            <div className="text-sm text-zinc-500">
+              {hash && (
+                <a
+                  className="hover:underline hover:text-zinc-400"
+                  href={`https://explorer.camp-network-testnet.gelato.digital/address/${hash}`}
+                >
+                  Transaction hash: {truncateText(hash || "", 20)}
+                </a>
+              )}
+              {isConfirming ? (
+                <div>Waiting for confirmation...</div>
+              ) : isConfirmed ? (
+                <div>Transaction confirmed!</div>
+              ) : null}
+            </div>
+            <button className="Button green" onClick={handleMint}>
+              {(loading || isPending) && !isConfirmed ? "Loading" : "Mint"}
+            </button>
           </div>
           <Dialog.Close asChild>
-            <button className="IconButton" aria-label="Close">
+            <button
+              className="IconButton"
+              aria-label="Close"
+              onClick={handleClear}
+            >
               x
             </button>
           </Dialog.Close>
