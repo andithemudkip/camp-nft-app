@@ -6,6 +6,7 @@ import MintButton from "../components/MintButton";
 import { Hero } from "../components/Hero";
 import NFTCard from "../components/NFTCard";
 import { useAccount } from "wagmi";
+import { BACKEND_URL } from "../constants";
 
 
 
@@ -25,6 +26,7 @@ const Home: NextPage = () => {
       </nav>
       <main className={styles.main}>
         <Hero />
+        {BACKEND_URL}
         <div className="p-2 text-xl text-left w-full border-t-2 border-zinc-900 mb-2" />
         {/* <MintButton/> */}
         <div className={styles.grid}>
