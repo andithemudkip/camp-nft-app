@@ -6,6 +6,8 @@ import MintButton from "../components/MintButton";
 import { Hero } from "../components/Hero";
 import NFTCard from "../components/NFTCard";
 
+
+
 const Home: NextPage = () => {
   return (
     <div className={styles.container}>

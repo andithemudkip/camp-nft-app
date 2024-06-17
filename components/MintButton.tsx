@@ -1,15 +1,57 @@
 import React, { useState } from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { FileUploader } from "react-drag-drop-files";
-const fileTypes = ["JPG", "JPEG", "PNG", "GIF"];
+import { ACCEPTED_FILE_TYPES, NFT_CONTRACT_ADDRESS } from "../constants";
+import NFTContract from "../contracts/CampNFT.json";
+import { uploadMetadata } from "../utils/create";
 
 const MintButton = () => {
   const [file, setFile] = useState(null);
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
   const handleChange = (file: any) => {
     setFile(file);
+    console.log(file);
+  };
+  const handleNameInput = (e: any) => {
+    setName(e.target.value);
+  };
+
+  const handleDescriptionInput = (e: any) => {
+    setDescription(e.target.value);
+  };
+  const handleMint = async () => {
+    if (!file) {
+      alert("Please select an image.");
+      return;
+    }
+    if (!name) {
+      alert("Please enter a name.");
+      return;
+    }
+    if (!description) {
+      alert("Please enter a description.");
+      return;
+    }
+    if (loading) return;
+    setLoading(true);
+    try {
+      const meta = await uploadMetadata({
+        file,
+        name,
+        description,
+      });
+      console.log(meta);
+      setLoading(false);
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+    }
   };
   return (
-    <Dialog.Root>
+    <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
         <button className="transition duration-200 ease-out bg-orange-500 border-2 hover:border-white border-transparent hover:bg-black text-white font-bold py-1 px-2 mr-5 text-sm md:text-base rounded-xl">
           Mint your own NFT
@@ -30,7 +72,13 @@ const MintButton = () => {
                 <label className="Label" htmlFor="name" aria-required>
                   Name
                 </label>
-                <input className="Input" id="name" placeholder="My NFT" />
+                <input
+                  className="Input"
+                  id="name"
+                  placeholder="My NFT"
+                  value={name}
+                  onChange={handleNameInput}
+                />
               </fieldset>
               <fieldset className="Fieldset">
                 <label className="Label">Description</label>
@@ -38,12 +86,14 @@ const MintButton = () => {
                   className="Textarea"
                   id="description"
                   placeholder="This is an NFT."
+                  value={description}
+                  onChange={handleDescriptionInput}
                 />
               </fieldset>
               <FileUploader
                 handleChange={handleChange}
                 name="file"
-                types={fileTypes}
+                types={ACCEPTED_FILE_TYPES}
                 classes="drop-area"
                 required
               />
@@ -66,9 +116,9 @@ const MintButton = () => {
           </div>
 
           <div className="w-full flex justify-end items-end mt-3">
-            <Dialog.Close asChild>
-              <button className="Button green">Mint</button>
-            </Dialog.Close>
+            {/* <Dialog.Close asChild> */}
+              <button className="Button green" onClick={handleMint}>Mint</button>
+            {/* </Dialog.Close> */}
           </div>
           <Dialog.Close asChild>
             <button className="IconButton" aria-label="Close">
