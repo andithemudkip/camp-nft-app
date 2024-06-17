@@ -76,7 +76,6 @@ const MintButton = () => {
         name,
         description,
       });
-      console.log(meta);
 
       writeContract({
         abi: NFTContract,
@@ -170,7 +169,7 @@ const MintButton = () => {
                 <div>Transaction confirmed!</div>
               ) : null}
             </div>
-            <button className="Button green" onClick={handleMint}>
+            <button className="Button green" onClick={handleMint} disabled={loading}>
               {(loading || isPending) && !isConfirmed ? "Loading" : "Mint"}
             </button>
           </div>

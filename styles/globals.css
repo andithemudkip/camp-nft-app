@@ -142,6 +142,11 @@ input {
     box-shadow: 0 0 0 2px white;
 }
 
+.Button.green:disabled {
+    background-color: rgb(43, 43, 43);
+    color: rgb(219, 219, 219);
+}
+
 .IconButton {
     font-family: inherit;
     border-radius: 100%;
