@@ -77,15 +77,18 @@ const MintButton = (props: any) => {
 
   const handleMint = async () => {
     if (!file) {
-      alert("Please select an image.");
+      // alert("Please select an image.");
+      toast.info("Please select an image.");
       return;
     }
     if (!name) {
-      alert("Please enter a name.");
+      // alert("Please enter a name.");
+      toast.info("Please enter a name.");
       return;
     }
     if (!description) {
-      alert("Please enter a description.");
+      // alert("Please enter a description.");
+      toast.info("Please enter a description.");
       return;
     }
     if (loading) return;
