@@ -44,11 +44,25 @@ const Home: NextPage = () => {
       </main>
       <footer className={styles.footer}>
         <a
+          href="https://github.com/andithemudkip"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Github
+        </a>
+        <a
           href="https://andithemudkip.com"
           rel="noopener noreferrer"
           target="_blank"
         >
           Andrei Cracanau
+        </a>
+        <a
+          href="https://twitter.com/andithemudkip"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          Twitter
         </a>
       </footer>
     </div>
