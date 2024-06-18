@@ -88,7 +88,6 @@ const FloatingSide = () => {
     setIsOpen(!isOpen);
   };
   const { address } = useAccount();
-  console.log(address);
   const { data, loading, error, refetch } = useQuery(QUERY, {
     variables: {
       id: address.toLowerCase(),
@@ -102,8 +101,6 @@ const FloatingSide = () => {
     console.error(error);
     return null;
   }
-
-  console.log(data);
 
   const tokens = data.tokens
     .map((token: any) => ({ ...token, tokenID: Number(token.tokenID) }))
@@ -135,51 +132,6 @@ const FloatingSide = () => {
                 tokenURI={token.tokenURI}
               />
             ))}
-            {/* <CollectibleItem
-              tokenID={1}
-              owner="0x1234567890abcdef1234567890abcdef12345678"
-              tokenURI="ipfs://QmXJ9Z ... 6z"
-            />
-            <CollectibleItem
-              tokenID={1}
-              owner="0x1234567890abcdef1234567890abcdef12345678"
-              tokenURI="ipfs://QmXJ9Z ... 6z"
-            />
-            <CollectibleItem
-              tokenID={1}
-              owner="0x1234567890abcdef1234567890abcdef12345678"
-              tokenURI="ipfs://QmXJ9Z ... 6z"
-            />
-            <CollectibleItem
-              tokenID={1}
-              owner="0x1234567890abcdef1234567890abcdef12345678"
-              tokenURI="ipfs://QmXJ9Z ... 6z"
-            />
-            <CollectibleItem
-              tokenID={1}
-              owner="0x1234567890abcdef1234567890abcdef12345678"
-              tokenURI="ipfs://QmXJ9Z ... 6z"
-            />
-            <CollectibleItem
-              tokenID={1}
-              owner="0x1234567890abcdef1234567890abcdef12345678"
-              tokenURI="ipfs://QmXJ9Z ... 6z"
-            />
-            <CollectibleItem
-              tokenID={1}
-              owner="0x1234567890abcdef1234567890abcdef12345678"
-              tokenURI="ipfs://QmXJ9Z ... 6z"
-            />
-            <CollectibleItem
-              tokenID={1}
-              owner="0x1234567890abcdef1234567890abcdef12345678"
-              tokenURI="ipfs://QmXJ9Z ... 6z"
-            />
-            <CollectibleItem
-              tokenID={1}
-              owner="0x1234567890abcdef1234567890abcdef12345678"
-              tokenURI="ipfs://QmXJ9Z ... 6z"
-            /> */}
           </div>
         </Popover.Content>
       </Popover.Portal>

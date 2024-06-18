@@ -22,10 +22,14 @@ const Home: NextPage = () => {
         <link href="/favicon.ico" rel="icon" />
       </Head>
       <nav className={styles.nav}>
-        {isConnected && <MintButton refetch={ref.current} />}
-        <ClientOnly>
-          <FloatingSide />
-        </ClientOnly>
+        {isConnected && (
+          <>
+            <MintButton refetch={ref.current} />
+            <ClientOnly>
+              <FloatingSide />
+            </ClientOnly>
+          </>
+        )}
         <ConnectButton />
       </nav>
       {/* <FloatingSide /> */}
