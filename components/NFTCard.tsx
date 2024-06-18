@@ -31,7 +31,7 @@ const NFTCard = ({ tokenID, owner, tokenURI }: any) => {
       });
   }, [tokenURI]);
   return (
-    <div className="border-2 border-zinc-800 rounded-xl p-0 max-w-60 duration-200 ease-in-out bg-black">
+    <div className="outline outline-2 outline-zinc-800 rounded-xl p-0 max-w-60 duration-200 ease-in-out bg-black">
       <div className="overflow-hidden rounded-lg inline-block">
         {image.length ? (
           <>
