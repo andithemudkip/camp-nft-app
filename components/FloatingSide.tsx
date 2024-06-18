@@ -1,13 +1,23 @@
 import { useEffect, useState } from "react";
+import { useQuery, gql } from "@apollo/client";
 import { ArrowDown } from "./icons/ArrowDown";
 import * as Popover from "@radix-ui/react-popover";
 import styles from "../styles/Collection.module.css";
 import { getInfuraURL } from "../utils/ipfs";
 import { formatAddress, truncateText } from "../utils/text";
+import { useAccount } from "wagmi";
+
+const QUERY = gql`
+  query MyQuery($id: ID = "") {
+    tokens(where: { owner_: { id: $id } }) {
+      tokenURI
+      tokenID
+    }
+  }
+`;
 
 const CollectibleItem = ({ tokenID, owner, tokenURI }: any) => {
   const [name, setName] = useState("Loading...");
-  const [description, setDescription] = useState("Loading...");
   const [image, setImage] = useState("");
   const [loading, setLoading] = useState(true);
   useEffect(() => {
@@ -15,41 +25,32 @@ const CollectibleItem = ({ tokenID, owner, tokenURI }: any) => {
       .then((response) => response.json())
       .then((data) => {
         setName(data?.name || "NFT");
-        setDescription(
-          data?.description || "This is an NFT yes it sure is an NFT alright.",
-        );
         setImage(
           getInfuraURL(data?.image).toString() ||
-            "https://picsum.photos/300/300",
+            "https://picsum.photos/300/300"
         );
         setLoading(false);
       })
       .catch((error) => {
         console.error("Error:", error);
         setName("NFT failed to load.");
-        setDescription(":(");
         setLoading(false);
       });
   }, [tokenURI]);
   return (
-    <div className="rounded-md p-0 duration-200 ease-in-out bg-black/80">
+    <div className="rounded-md p-0 duration-200 ease-in-out bg-black/80 overflow-hidden">
       <div className="flex">
-        <div className="overflow-hidden rounded-lg inline-block">
+        <div className="overflow-hidden inline-block">
           {image.length ? (
             <>
               <img
-                className={`brightness-90 hover:brightness-100 blur-none absolute z-15 w-20 h-20 object-contain rounded-xl rounded-b-none transition duration-200 ease-out cursor-pointer`}
-                src={image}
-                alt="NFT"
-              />
-              <img
-                className="blur-sm w-30 h-30 z-1 object-cover rounded-xl rounded-b-none opacity-20 hover:scale-105 transition duration-200 ease-out cursor-pointer"
+                className={`brightness-90 hover:brightness-100 blur-none z-15 w-20 h-20 object-cover transition duration-200 ease-out cursor-pointer`}
                 src={image}
                 alt="NFT"
               />
             </>
           ) : (
-            <div className="w-28 h-28 bg-zinc-900 rounded-xl rounded-b-none opacity-20 transition duration-200 ease-out cursor-pointer ${loading ? 'animate-pulse' : ''}" />
+            <div className="w-28 h-28 bg-zinc-900 opacity-20 transition duration-200 ease-out cursor-pointer ${loading ? 'animate-pulse' : ''}" />
           )}
         </div>
         <div className="flex-1 flex flex-col justify-center align-center">
@@ -86,6 +87,27 @@ const FloatingSide = () => {
   const handleToggle = () => {
     setIsOpen(!isOpen);
   };
+  const { address } = useAccount();
+  console.log(address);
+  const { data, loading, error, refetch } = useQuery(QUERY, {
+    variables: {
+      id: address.toLowerCase(),
+    },
+  });
+  if (loading) {
+    return <h2>Loading...</h2>;
+  }
+
+  if (error) {
+    console.error(error);
+    return null;
+  }
+
+  console.log(data);
+
+  const tokens = data.tokens
+    .map((token: any) => ({ ...token, tokenID: Number(token.tokenID) }))
+    .sort((a: any, b: any) => b.tokenID - a.tokenID);
   return (
     <Popover.Root>
       <Popover.Trigger asChild>
@@ -105,6 +127,29 @@ const FloatingSide = () => {
       <Popover.Portal>
         <Popover.Content className={styles.PopoverContent} sideOffset={5}>
           <div className="flex flex-col gap-2">
+            {tokens.map((token: any) => (
+              <CollectibleItem
+                key={token.tokenID}
+                tokenID={token.tokenID}
+                owner={address}
+                tokenURI={token.tokenURI}
+              />
+            ))}
+            {/* <CollectibleItem
+              tokenID={1}
+              owner="0x1234567890abcdef1234567890abcdef12345678"
+              tokenURI="ipfs://QmXJ9Z ... 6z"
+            />
+            <CollectibleItem
+              tokenID={1}
+              owner="0x1234567890abcdef1234567890abcdef12345678"
+              tokenURI="ipfs://QmXJ9Z ... 6z"
+            />
+            <CollectibleItem
+              tokenID={1}
+              owner="0x1234567890abcdef1234567890abcdef12345678"
+              tokenURI="ipfs://QmXJ9Z ... 6z"
+            />
             <CollectibleItem
               tokenID={1}
               owner="0x1234567890abcdef1234567890abcdef12345678"
@@ -120,6 +165,21 @@ const FloatingSide = () => {
               owner="0x1234567890abcdef1234567890abcdef12345678"
               tokenURI="ipfs://QmXJ9Z ... 6z"
             />
+            <CollectibleItem
+              tokenID={1}
+              owner="0x1234567890abcdef1234567890abcdef12345678"
+              tokenURI="ipfs://QmXJ9Z ... 6z"
+            />
+            <CollectibleItem
+              tokenID={1}
+              owner="0x1234567890abcdef1234567890abcdef12345678"
+              tokenURI="ipfs://QmXJ9Z ... 6z"
+            />
+            <CollectibleItem
+              tokenID={1}
+              owner="0x1234567890abcdef1234567890abcdef12345678"
+              tokenURI="ipfs://QmXJ9Z ... 6z"
+            /> */}
           </div>
         </Popover.Content>
       </Popover.Portal>

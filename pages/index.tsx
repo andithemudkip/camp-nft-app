@@ -23,7 +23,9 @@ const Home: NextPage = () => {
       </Head>
       <nav className={styles.nav}>
         {isConnected && <MintButton refetch={ref.current} />}
-        <FloatingSide />
+        <ClientOnly>
+          <FloatingSide />
+        </ClientOnly>
         <ConnectButton />
       </nav>
       {/* <FloatingSide /> */}

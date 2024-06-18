@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { formatAddress, truncateText } from "../utils/text";
 import { getInfuraURL } from "../utils/ipfs";
+import { MaterialPerson } from "./icons/Person";
 
 const NFTCard = ({ tokenID, owner, tokenURI }: any) => {
   const [name, setName] = useState("Loading...");
@@ -62,7 +63,7 @@ const NFTCard = ({ tokenID, owner, tokenURI }: any) => {
           <div className="text-gray-400">{tokenID}</div>
         </div>
         <div className="flex justify-between">
-          <div className="text-gray-500">@</div>
+          <div className="text-gray-500"><MaterialPerson className="h-6 w-4" /></div>
           <a
             href={`https://explorer.camp-network-testnet.gelato.digital/address/${owner}`}
             className="text-gray-400 hover:text-gray-200"
