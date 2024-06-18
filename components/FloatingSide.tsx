@@ -149,6 +149,17 @@ const CollectibleItem = ({ tokenID, owner, tokenURI, refetch }: any) => {
         <div className="p-2">
           <div className="text-sm text-zinc-300">Description</div>
           <div className="text-zinc-400 text-sm">{description}</div>
+          <div className="text-sm text-zinc-300 mt-2">Metadata</div>
+          <div className="text-zinc-400 text-sm">
+            <a
+              href={getInfuraURL(tokenURI).toString()}
+              className="hover:text-zinc-300"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              {truncateText(tokenURI, 30)}
+            </a>
+          </div>
           <div className="text-sm text-zinc-300 mt-2">Actions</div>
           {/* Transfer to... */}
           <div className="flex gap-2 mt-1">

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { formatAddress, truncateText } from "../utils/text";
 import { getInfuraURL } from "../utils/ipfs";
 import { MaterialPerson } from "./icons/Person";
+import { CurlyBrackets } from "./icons/CurlyBrackets";
 
 const NFTCard = ({ tokenID, owner, tokenURI }: any) => {
   const [name, setName] = useState("Loading...");
@@ -71,8 +72,23 @@ const NFTCard = ({ tokenID, owner, tokenURI }: any) => {
           <a
             href={`https://explorer.camp-network-testnet.gelato.digital/address/${owner}`}
             className="text-gray-400 hover:text-gray-200"
+            rel="noopener noreferrer"
+            target="_blank"
           >
             {formatAddress(owner)}
+          </a>
+        </div>
+        <div className="flex justify-between">
+          <div className="text-gray-500">
+            <CurlyBrackets className="h-6 w-4" />
+          </div>
+          <a
+            href={getInfuraURL(tokenURI).toString()}
+            className="text-gray-400 hover:text-gray-200"
+            rel="noopener noreferrer"
+            target="_blank"
+          >
+            {truncateText(tokenURI, 16)}
           </a>
         </div>
       </div>
