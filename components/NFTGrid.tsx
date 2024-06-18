@@ -2,7 +2,6 @@ import { useQuery, gql, useSubscription } from "@apollo/client";
 import styles from "../styles/Home.module.css";
 import NFTCard from "./NFTCard";
 import { forwardRef, useContext, useEffect, useImperativeHandle } from "react";
-// import { SparksContext } from "../pages/_app";
 
 const QUERY = gql`
   query NFTs {
@@ -44,9 +43,9 @@ const NFTs = forwardRef((props, ref) => {
     return null;
   }
 
-  const tokens = data.tokens.map ((token: any) => ({ ...token, tokenID: Number (token.tokenID) })).sort (
-    (a: any, b: any) => b.tokenID - a.tokenID
-  );
+  const tokens = data.tokens
+    .map((token: any) => ({ ...token, tokenID: Number(token.tokenID) }))
+    .sort((a: any, b: any) => b.tokenID - a.tokenID);
 
   return (
     <div className={styles.grid}>

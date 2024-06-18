@@ -5,15 +5,15 @@ import { GRAPHQL_URL, WS_GRAPHQL_URL } from "./constants";
 import { http } from "viem";
 
 const httpLink = new HttpLink({
-    uri: GRAPHQL_URL,
+  uri: GRAPHQL_URL,
 });
 
 const wsLink = () => {
-    return new GraphQLWsLink(
-        createClient({
-            url: WS_GRAPHQL_URL,
-        })
-    );
+  return new GraphQLWsLink(
+    createClient({
+      url: WS_GRAPHQL_URL,
+    }),
+  );
 };
 
 // export const apolloClient = new ApolloClient({
@@ -22,11 +22,11 @@ const wsLink = () => {
 // });
 
 const createApolloClient = () => {
-    return new ApolloClient({
-        // link: typeof window === "undefined" ? httpLink : wsLink(),
-        link: httpLink,
-        cache: new InMemoryCache(),
-    });
+  return new ApolloClient({
+    // link: typeof window === "undefined" ? httpLink : wsLink(),
+    link: httpLink,
+    cache: new InMemoryCache(),
+  });
 };
 
 export default createApolloClient;

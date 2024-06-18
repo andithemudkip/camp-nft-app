@@ -10,6 +10,7 @@ import {
   useWriteContract,
 } from "wagmi";
 import { truncateText } from "../utils/text";
+import styles from "../styles/Mint.module.css";
 
 const MintButton = (props: any) => {
   const [file, setFile] = useState(null);
@@ -65,9 +66,6 @@ const MintButton = (props: any) => {
     }
   }, [isConfirmed]);
 
-  // useEffect(() => {
-  //   console.log (props.refetch?.refetch);
-  // }, []);
   const handleMint = async () => {
     if (!file) {
       alert("Please select an image.");
@@ -104,37 +102,37 @@ const MintButton = (props: any) => {
   return (
     <Dialog.Root open={open} onOpenChange={setOpen}>
       <Dialog.Trigger asChild>
-        <button className="transition duration-200 ease-out bg-orange-500 border-2 hover:border-white border-transparent hover:bg-black text-white font-bold py-1 px-2 mr-5 text-sm md:text-base rounded-xl">
+        <button className="transition duration-200 ease-out bg-orange-500 border-2 hover:border-zinc-800 border-transparent hover:bg-black text-white font-bold py-1 px-3 text-sm md:text-base rounded-xl">
           Mint your own NFT
         </button>
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="DialogOverlay" />
-        <Dialog.Content className="DialogContent">
-          <Dialog.Title className="DialogTitle">
+        <Dialog.Overlay className={styles.DialogOverlay} />
+        <Dialog.Content className={styles.DialogContent}>
+          <Dialog.Title className={styles.DialogTitle}>
             Create collectible
           </Dialog.Title>
-          <Dialog.Description className="DialogDescription">
+          <Dialog.Description className={styles.DialogDescription}>
             Fill in the details below to create your collectible.
           </Dialog.Description>
           <div className="flex flex-row items-end justify-between gap-4">
             <div className="flex-1">
-              <fieldset className="Fieldset">
-                <label className="Label" htmlFor="name" aria-required>
+              <fieldset className={styles.Fieldset}>
+                <label className={styles.Label} htmlFor="name" aria-required>
                   Name
                 </label>
                 <input
-                  className="Input"
+                  className={styles.Input}
                   id="name"
                   placeholder="My NFT"
                   value={name}
                   onChange={handleNameInput}
                 />
               </fieldset>
-              <fieldset className="Fieldset">
-                <label className="Label">Description</label>
+              <fieldset className={styles.Fieldset}>
+                <label className={styles.Label}>Description</label>
                 <textarea
-                  className="Textarea"
+                  className={styles.Textarea}
                   id="description"
                   placeholder="This is an NFT."
                   value={description}
@@ -183,7 +181,7 @@ const MintButton = (props: any) => {
               ) : null}
             </div>
             <button
-              className="Button green"
+              className={styles.MintButton}
               onClick={handleMint}
               disabled={loading}
             >
@@ -192,7 +190,7 @@ const MintButton = (props: any) => {
           </div>
           <Dialog.Close asChild>
             <button
-              className="IconButton"
+              className={styles.IconButton}
               aria-label="Close"
               onClick={handleClear}
             >

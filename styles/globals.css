@@ -5,6 +5,7 @@
 @import '@radix-ui/colors/green.css';
 @import '@radix-ui/colors/mauve.css';
 @import '@radix-ui/colors/violet.css';
+
 :root {
     --foreground-rgb: 0, 0, 0;
     --background-start-rgb: 220, 220, 220;
@@ -12,7 +13,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-     :root {
+    :root {
         --foreground-rgb: 255, 255, 255;
         --background-start-rgb: 3, 3, 3;
         --background-end-rgb: 16, 17, 19;
@@ -34,8 +35,7 @@ body {
     padding: 0;
     margin: 0;
     color: rgb(var(--foreground-rgb));
-    font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-    background: linear-gradient( to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
+    background: linear-gradient(to bottom, transparent, rgb(var(--background-end-rgb))) rgb(var(--background-start-rgb));
     font-family: 'AndersonGrotesk', sans-serif;
 }
 
@@ -56,166 +56,6 @@ input {
     all: unset;
 }
 
-.DialogOverlay {
-    background-color: var(--black-a9);
-    position: fixed;
-    inset: 0;
-    animation: overlayShow 300ms cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 40;
-    backdrop-filter: blur(10px);
-}
-
-.DialogContent {
-    background-color: rgb(14, 14, 14);
-    border-radius: 6px;
-    border: 1px solid rgb(43, 43, 43);
-    box-shadow: hsl(206 22% 7% / 35%) 0px 10px 38px -10px, hsl(206 22% 7% / 20%) 0px 10px 20px -15px;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100vw;
-    max-width: 600px;
-    max-height: 85vh;
-    padding: 25px;
-    animation: contentShow 300ms cubic-bezier(0.16, 1, 0.3, 1);
-    z-index: 40;
-}
-
-.DialogContent:focus {
-    outline: none;
-}
-
-.DialogTitle {
-    margin: 0;
-    font-weight: 500;
-    color: white;
-    font-size: 17px;
-}
-
-.DialogDescription {
-    margin: 10px 0 20px;
-    color: rgb(219, 219, 219);
-    font-size: 15px;
-    line-height: 1.5;
-}
-
-.Button {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: .5rem;
-    padding: 0 15px;
-    font-size: 15px;
-    line-height: 1;
-    font-weight: 500;
-    height: 35px;
-}
-
-
-/* .Button.violet {
-    background-color: white;
-    color: var(--violet-11);
-    box-shadow: 0 2px 10px var(--black-a7);
-} */
-
-
-/* .Button.violet:hover {
-    background-color: var(--mauve-3);
-}
-
-.Button.violet:focus {
-    box-shadow: 0 0 0 2px black;
-} */
-
-.Button.green {
-    background-color: white;
-    color: black;
-    transition: all .1s ease-in-out;
-}
-
-.Button.green:hover {
-    background-color: rgb(255, 80, 25);
-}
-
-.Button.green:focus {
-    box-shadow: 0 0 0 2px white;
-}
-
-.Button.green:disabled {
-    background-color: rgb(43, 43, 43);
-    color: rgb(219, 219, 219);
-}
-
-.IconButton {
-    font-family: inherit;
-    border-radius: 100%;
-    height: 25px;
-    width: 25px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    transition: all .1s ease-in-out;
-}
-
-.IconButton:hover {
-    background-color: white;
-    color: black;
-}
-
-.IconButton:focus {
-    box-shadow: 0 0 0 2px white;
-}
-
-.Fieldset {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    margin-bottom: .6rem;
-}
-
-.Label {
-    font-size: 15px;
-    color: rgb(219, 219, 219);
-    width: 90px;
-    text-align: right;
-}
-
-.Input {
-    flex: 1;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    padding: 0 10px;
-    font-size: 15px;
-    line-height: 1;
-    color: rgb(219, 219, 219);
-    box-shadow: 0 0 0 1px rgb(49, 49, 49);
-    height: 35px;
-}
-
-.Textarea {
-    resize: none;
-    /* height: 6rem; */
-    /* height: 100%; */
-    flex: 1;
-    padding: 0.5rem;
-    color: rgb(219, 219, 219);
-    background-color: rgb(14, 14, 14);
-    border: 1px solid rgb(43, 43, 43);
-    border-radius: 6px;
-    line-height: normal;
-}
-
-.Input:focus {
-    box-shadow: 0 0 0 2px rgb(219, 219, 219);
-}
-
 .drop-area {
     border: 2px dashed rgb(43, 43, 43) !important;
     color: rgb(219, 219, 219) !important;
@@ -227,15 +67,13 @@ input {
 
 .drop-area svg {
     display: none;
-    /* color: rgb(255, 80, 25) !important;
-    fill: rgb(255, 80, 25) !important;
-    stroke: rgb(255, 80, 25) !important; */
 }
 
 @keyframes overlayShow {
     from {
         opacity: 0;
     }
+
     to {
         opacity: 1;
     }
@@ -246,8 +84,10 @@ input {
         opacity: 0;
         transform: translate(-50%, -48%) scale(0.96);
     }
+
     to {
         opacity: 1;
         transform: translate(-50%, -50%) scale(1);
     }
 }
+

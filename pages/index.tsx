@@ -4,12 +4,11 @@ import Head from "next/head";
 import styles from "../styles/Home.module.css";
 import MintButton from "../components/MintButton";
 import { Hero } from "../components/Hero";
-import NFTCard from "../components/NFTCard";
 import { useAccount } from "wagmi";
-import { BACKEND_URL } from "../constants";
 import NFTs from "../components/NFTGrid";
 import ClientOnly from "../components/ClientOnly";
 import { useRef } from "react";
+import FloatingSide from "../components/FloatingSide";
 
 const Home: NextPage = () => {
   const ref = useRef();
@@ -24,16 +23,16 @@ const Home: NextPage = () => {
       </Head>
       <nav className={styles.nav}>
         {isConnected && <MintButton refetch={ref.current} />}
+        <FloatingSide />
         <ConnectButton />
       </nav>
+      {/* <FloatingSide /> */}
       <main className={styles.main}>
         <Hero />
         <div className="p-2 text-xl text-left w-full border-t-2 border-zinc-900 mb-2" />
-        <div className={styles.grid}>
-          <ClientOnly>
-            <NFTs ref={ref} />
-          </ClientOnly>
-        </div>
+        <ClientOnly>
+          <NFTs ref={ref} />
+        </ClientOnly>
       </main>
       <footer className={styles.footer}>
         <a
