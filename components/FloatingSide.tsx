@@ -90,7 +90,7 @@ const FloatingSide = () => {
   const { address } = useAccount();
   const { data, loading, error, refetch } = useQuery(QUERY, {
     variables: {
-      id: address.toLowerCase(),
+      id: address?.toLowerCase() || '',
     },
   });
   if (loading) {
