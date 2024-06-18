@@ -11,6 +11,7 @@ import {
 } from "wagmi";
 import { truncateText } from "../utils/text";
 import styles from "../styles/Mint.module.css";
+import { toast } from "sonner";
 
 const MintButton = (props: any) => {
   const [file, setFile] = useState(null);
@@ -59,10 +60,18 @@ const MintButton = (props: any) => {
 
   useEffect(() => {
     if (isConfirmed) {
-      setTimeout(() => {
-        handleClear();
-        props.refetch?.refetch();
-      }, 3000);
+      const promise = new Promise((resolve) => {
+        setTimeout(() => {
+          handleClear();
+          props.refetch?.refetch();
+          resolve(null);
+        }, 3000);
+      });
+      toast.promise(promise, {
+        loading: "Transaction confirmed. Closing modal in 3 seconds...",
+        success: "Success!",
+        error: "Error sending transaction. Please try again.",
+      });
     }
   }, [isConfirmed]);
 

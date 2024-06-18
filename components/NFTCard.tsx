@@ -14,11 +14,11 @@ const NFTCard = ({ tokenID, owner, tokenURI }: any) => {
       .then((data) => {
         setName(data?.name || "NFT");
         setDescription(
-          data?.description || "This is an NFT yes it sure is an NFT alright.",
+          data?.description || "This is an NFT yes it sure is an NFT alright."
         );
         setImage(
           getInfuraURL(data?.image).toString() ||
-            "https://picsum.photos/300/300",
+            "https://picsum.photos/300/300"
         );
         setLoading(false);
       })
@@ -54,7 +54,9 @@ const NFTCard = ({ tokenID, owner, tokenURI }: any) => {
       >
         {truncateText(name, 20)}
       </div>
-      <div className={`pl-4 pt-0 ${loading ? "animate-pulse" : ""}`}>
+      <div
+        className={`pl-4 pt-0 text-zinc-400 ${loading ? "animate-pulse" : ""}`}
+      >
         {truncateText(description, 30)}
       </div>
       <div className="p-4 w-60">
@@ -63,7 +65,9 @@ const NFTCard = ({ tokenID, owner, tokenURI }: any) => {
           <div className="text-gray-400">{tokenID}</div>
         </div>
         <div className="flex justify-between">
-          <div className="text-gray-500"><MaterialPerson className="h-6 w-4" /></div>
+          <div className="text-gray-500">
+            <MaterialPerson className="h-6 w-4" />
+          </div>
           <a
             href={`https://explorer.camp-network-testnet.gelato.digital/address/${owner}`}
             className="text-gray-400 hover:text-gray-200"

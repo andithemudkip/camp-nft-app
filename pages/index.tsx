@@ -9,15 +9,17 @@ import NFTs from "../components/NFTGrid";
 import ClientOnly from "../components/ClientOnly";
 import { useRef } from "react";
 import FloatingSide from "../components/FloatingSide";
+import { Toaster } from "sonner";
 
 const Home: NextPage = () => {
   const ref = useRef();
   const { isConnected } = useAccount();
   return (
     <div className={styles.container}>
+      <Toaster />
       <Head>
-        <title>Camp NFT App</title>
-        <meta content="Camp NFT App | Sparks" name="description" />
+        <title>Sparks | NFT App</title>
+        <meta content="Sparks | NFT App" name="description" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <link href="/favicon.ico" rel="icon" />
       </Head>
